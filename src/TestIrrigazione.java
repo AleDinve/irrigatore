@@ -1,7 +1,8 @@
+import java.io.IOException;
 
 public class TestIrrigazione {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		//un serbatoio è definito dalla sua capienza in litri e portata in litri/minuto
 		Serbatoio serbatoio1 = new Serbatoio(100, 10.0);
@@ -15,7 +16,7 @@ public class TestIrrigazione {
 		
 		
 		assert serbatoio1.getNome().equals("Default");
-		System.out.println(serbatoio2);
+//		System.out.println(serbatoio2);
 		assert serbatoio2.toString().equals("Serbatoio Nord: Capienza 50 l, Capacità attuale 50 l, Portata 20.0 l/m");
 		
 		
@@ -25,7 +26,7 @@ public class TestIrrigazione {
 		
 		//lo spruzzatore di default eroga 5 l/m
 		Spruzzatore spruzzatore3 = new Spruzzatore();
-		System.out.println(spruzzatore3);
+//		System.out.println(spruzzatore3);
 
 		assert spruzzatore3.getPortata() == 5.0;
 		assert spruzzatore3.toString().equals("Spruzzatore Default: Portata 5.0 l/m");
@@ -39,6 +40,8 @@ public class TestIrrigazione {
 		
 		assert sistema.aggiungiSerbatoio(serbatoio1);
 		assert sistema.aggiungiSerbatoio(serbatoio2);
+
+
 		
 		//non si dovrebbero poter aggiungere 3 serbatoi
 		assert !sistema.aggiungiSerbatoio(new Serbatoio(1, 1));
@@ -56,6 +59,8 @@ public class TestIrrigazione {
 		assert sistema.aggiungiSpruzzatore(spruzzatore2);
 		assert sistema.aggiungiSpruzzatore(spruzzatore3);
 		assert sistema.getPortataInutilizzata() == 0;
+		
+		sistema.printStato();
 		
 		System.out.println();
 		System.out.println(sistema.toString());
@@ -92,10 +97,13 @@ public class TestIrrigazione {
 		sistema.riempiSerbatoi();
 		System.out.println(sistema);
 		assert sistema.toString().equals("Serbatoio Default capacità attuale 100 - Serbatoio Nord capacità attuale 50");
-
+		sistema.attiva(2);
+//		
+//		sistema.attiva(6);
+//		System.out.println(sistema);
 		
-		sistema.attiva(6);
-		System.out.println(sistema);
+		sistema.writeStatus("prova");
+		sistema.readStatus("prova");
 	}
 	
 	
