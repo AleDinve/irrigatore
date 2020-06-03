@@ -1,3 +1,5 @@
+import java.io.*;
+
 /**
  * 
  * @author Bertuccio Antonino, D'Inverno Giuseppe Alessio
@@ -40,9 +42,9 @@ public class SistemaIrrigazione {
 	 * @return boolean
 	 */
 	public boolean aggiungiSerbatoio(Serbatoio serb) {
-		if (numSerb == MAX_SERBATOI)
+		if (this.numSerb == MAX_SERBATOI)
 			return false;
-		this.serbatoi[numSerb] = serb;
+		this.serbatoi[this.numSerb] = serb;
 		this.portataTot += serb.getPortata();
 		this.portataRes += serb.getPortata();
 		this.capienzaTot += serb.getCapienza();
@@ -183,6 +185,35 @@ public class SistemaIrrigazione {
 			serbatoi[i].riempi();
 			this.capacitaResidua += serbatoi[i].getCapienza();
 		}
+	}
+	
+	public void readStatus(String file) throws IOException {
+		FileReader in = new FileReader("src/"+file+".txt");
+		BufferedReader bIn=new BufferedReader(in);
+		String c="";
+		c= bIn.readLine();
+		while(c!=null) {
+		System.out.println(c);
+		c= bIn.readLine();
+		}
+		try {	in.close();}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+	
+	}
+	
+	public void writeStatus(String file) throws IOException {
+		FileWriter out= new FileWriter("src/"+file+".txt");
+		BufferedWriter bOut=new BufferedWriter(out);
+		for (int i=0; i<serbatoi.length; i++)
+		{	
+			bOut.write("Serbatoio "+serbatoi[i].getNome()+": capacità "+serbatoi[i].getCapacitaAttuale()+"\n");
+			bOut.flush();
+		}
+		bOut.close();
+		
 	}
 
 }
