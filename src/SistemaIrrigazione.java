@@ -1,3 +1,8 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * 
  * @author Bertuccio Antonino, D'Inverno Giuseppe Alessio
@@ -12,7 +17,8 @@ public class SistemaIrrigazione {
 	private Spruzzatore[] spruzzatori;
 	public final int MAX_SERBATOI;
 	public final int MAX_SPRUZZATORI;
-
+    private final File leggi;
+    private final File scrivi;
 	int numSerb=0;
 	int numSpruz=0;
 
@@ -23,11 +29,14 @@ public class SistemaIrrigazione {
 	 * @param maxserbatoi    Numero massimo di serbatoi
 	 * @param maxspruzzatori Numero massimo di spruzzatori
 	 */
-	public SistemaIrrigazione(int maxserbatoi, int maxspruzzatori) {
+	public SistemaIrrigazione(File leggi,int maxserbatoi, int maxspruzzatori) {
 		MAX_SERBATOI = maxserbatoi;
 		MAX_SPRUZZATORI = maxspruzzatori;
 		serbatoi = new Serbatoio[MAX_SERBATOI];
 		spruzzatori = new Spruzzatore[MAX_SPRUZZATORI];
+		this.leggi=leggi;
+		String s=leggi.getPath();
+		this.scrivi=new File(s.substring(0,s.length()-4)+"Output.txt");
 		}
 
 	/**
@@ -183,6 +192,42 @@ public class SistemaIrrigazione {
 			serbatoi[i].riempi();
 			this.capacitaResidua += serbatoi[i].getCapienza();
 		}
+	}
+	public void ReadFromFile(File leggi) {
+		
+		
+	}
+	
+	public void write() throws IOException {
+		FileWriter fw=new FileWriter(leggi.getPath().substring(0,leggi.getPath().length()-4)+"Output.txt");
+		BufferedWriter bw=new BufferedWriter(fw);
+		
+		bw.write("Serbatoi(nome, capacità, capacità attuale, portata\n");
+		for(int i=0;i<serbatoi.length;i++) {
+			bw.write(serbatoi[i].getNome()+" "+serbatoi[i].getCapienza()+" "+serbatoi[i].getCapacitaAttuale()+
+					" "+serbatoi[i].getPortata()+"\n");
+		}
+		bw.flush();
+		bw.write("Spruzzatori(nome, portata\n");
+		for(int i=0;i<spruzzatori.length;i++) {
+			bw.write(spruzzatori[i].getNome()+" "+spruzzatori[i].getPortata()+"\n");
+		}
+		
+		try {
+			fw.close();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			bw.close();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public File getFile() {
+		return this.leggi;
 	}
 
 }

@@ -49,4 +49,8 @@ public class Spruzzatore {
 	{
 		return this.portata;
 	}
+	
+	public String getNome() {
+		return this.nome;
+	}
 }

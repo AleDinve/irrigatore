@@ -1,3 +1,4 @@
+import java.io.File;
 
 public class TestIrrigazione {
 
@@ -33,7 +34,8 @@ public class TestIrrigazione {
 
 		// Un sistema di irrigazione ha un numero massimo di serbatoi
 		// e un numero massimo di spruzzatori
-		SistemaIrrigazione sistema = new SistemaIrrigazione(2, 3);
+		File leggi=new File("C:\\Users\\Pietro\\eclipse-workspace\\caratteristiche.txt");
+		SistemaIrrigazione sistema = new SistemaIrrigazione(leggi,2, 3);
 		assert sistema.MAX_SERBATOI == 2;
 		assert sistema.MAX_SPRUZZATORI == 3;
 		
