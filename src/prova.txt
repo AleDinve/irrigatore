@@ -1,0 +1,2 @@
+Serbatoio Default: capacità 70.0
+Serbatoio Nord: capacità 20.0
